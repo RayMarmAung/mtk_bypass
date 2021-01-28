@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>payload/generic_dump_payload.bin</file>
+        <file>payload/generic_reboot_payload.bin</file>
+        <file>payload/mt6735_payload.bin</file>
+        <file>payload/mt6750_payload.bin</file>
+        <file>payload/mt6765_payload.bin</file>
+        <file>payload/mt6771_payload.bin</file>
+        <file>payload/mt6785_payload.bin</file>
+        <file>payload/mt8127_payload.bin</file>
+        <file>payload/mt8163_payload.bin</file>
+        <file>payload/mt8173_payload.bin</file>
+        <file>payload/mt8695_payload.bin</file>
+        <file>png/facebook.png</file>
+        <file>png/github.png</file>
+        <file>png/gmail.png</file>
+        <file>png/web.png</file>
+        <file>png/kpay.png</file>
+        <file>png/paypal.png</file>
+        <file>png/wavepay.png</file>
+        <file>png/title.ico</file>
+        <file>payload/mt6737_payload.bin</file>
+        <file>file/a32</file>
+        <file>file/a64</file>
+        <file>payload/mt6739_payload.bin</file>
+        <file>payload/generic_uart_dump_payload.bin</file>
+        <file>png/mtk bypass logo.jpg</file>
+    </qresource>
+</RCC>
