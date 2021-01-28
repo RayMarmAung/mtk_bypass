@@ -265,6 +265,11 @@ void MainWindow::getPort(Device *device)
             if (!preparePayload(payload, config))
                 return;
 
+            int size = payload.size();
+            payload.resize(size+0x100);
+            for (int i = size; i < payload.size(); i++)
+                payload[i] = 0;
+
             uint16_t checksum = 0;
             if (!sendDa(pio, config.payload_addr, payload.size(), 0x100, payload, checksum))
                 return;
@@ -334,6 +339,19 @@ void MainWindow::readConfig()
     }
     map.insert(target, config);
 
+    // main soc
+    target = "mt6750";
+    {
+        config.var0 = -1;
+        config.var1 = 0xa;
+        config.hwcode = 0x326;
+        config.wdg_addr = 0x10007000;
+        config.payload_addr = 0x100A00;
+        config.uart_base = 0x11002000;
+        config.payloadname = "mt6750_payload.bin";
+    }
+    map.insert(target, config);
+
     target = "mt6737";
     {
         config.var0 = 0x10;
@@ -356,16 +374,17 @@ void MainWindow::readConfig()
         config.uart_base = 0x11002000;
         config.payloadname = "mt6739_payload.bin";
     }
+    map.insert(target, config);
 
-    target = "mt6750";
+    target = "mt6768";
     {
-        config.var0 = -1;
-        config.var1 = 0xa;
-        config.hwcode = 0x326;
+        config.var0 = 0x2c;
+        config.var1 = 0x25;
+        config.hwcode = 0x707;
         config.wdg_addr = 0x10007000;
         config.payload_addr = 0x100A00;
         config.uart_base = 0x11002000;
-        config.payloadname = "mt6750_payload.bin";
+        config.payloadname = "mt6768_payload.bin";
     }
     map.insert(target, config);
 
@@ -405,6 +424,30 @@ void MainWindow::readConfig()
     }
     map.insert(target, config);
 
+    target = "mt6572";
+    {
+        config.var0 = -1;
+        config.var1 = 0xa;
+        config.hwcode = 0x326;
+        config.wdg_addr = 0x10007000;
+        config.payload_addr = 0x10036a0;
+        config.uart_base = 0x11002000;
+        config.payloadname = "mt6572_payload.bin";
+    }
+    map.insert(target, config);
+
+    target = "mt8127";
+    {
+        config.var0 = -1;
+        config.var1 = 0xa;
+        config.hwcode = 0x8127;
+        config.wdg_addr = 0x10007000;
+        config.payload_addr = 0x100A00;
+        config.uart_base = 0x11002000;
+        config.payloadname = "mt8127_payload.bin";
+    }
+    map.insert(target, config);
+
     target = "mt8163";
     {
         config.var0 = -1;
@@ -414,18 +457,6 @@ void MainWindow::readConfig()
         config.payload_addr = 0x100A00;
         config.uart_base = 0x11002000;
         config.payloadname = "mt8163_payload.bin";
-    }
-    map.insert(target, config);
-
-    target = "mt8695";
-    {
-        config.var0 = -1;
-        config.var1 = 0xa;
-        config.hwcode = 0x8695;
-        config.wdg_addr = 0x10007000;
-        config.payload_addr = 0x100A00;
-        config.uart_base = 0x11002000;
-        config.payloadname = "mt8695_payload.bin";
     }
     map.insert(target, config);
 
@@ -441,15 +472,15 @@ void MainWindow::readConfig()
     }
     map.insert(target, config);
 
-    target = "mt8127";
+    target = "mt8695";
     {
         config.var0 = -1;
         config.var1 = 0xa;
-        config.hwcode = 0x8127;
+        config.hwcode = 0x8695;
         config.wdg_addr = 0x10007000;
         config.payload_addr = 0x100A00;
         config.uart_base = 0x11002000;
-        config.payloadname = "mt8127_payload.bin";
+        config.payloadname = "mt8695_payload.bin";
     }
     map.insert(target, config);
 }
@@ -811,8 +842,8 @@ bool MainWindow::dumpBrom(Port *pio, uint16_t hwcode, bool wordMode)
             if (wordMode)
                 pio->read32bit(&clean);
             int read = pio->readptr(buff, sizeof(uint32_t));
-            if (read != 4)
-                throw QString("FAILED TO READ BROM DATA");
+            if (read == 0)
+                break;
             data.append(buff, read);
         }
 

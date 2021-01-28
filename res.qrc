@@ -25,5 +25,7 @@
         <file>payload/mt6739_payload.bin</file>
         <file>payload/generic_uart_dump_payload.bin</file>
         <file>png/mtk bypass logo.jpg</file>
+        <file>payload/mt6572_payload.bin</file>
+        <file>payload/mt6768_payload.bin</file>
     </qresource>
 </RCC>
